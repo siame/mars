@@ -1,4 +1,5 @@
 import pytest
+from robot.exceptions import UnknownInstructionException
 from robot.grid import Grid
 from robot.robot import Orientation, Position, Robot
 
@@ -48,3 +49,21 @@ def test_move_forward(orientation, final_position, grid):
     robot.move_forward()
 
     assert robot.position == final_position
+
+
+def test_robot_process_instruction_line(grid):
+    robot = Robot(1, 1, Orientation.E.name, grid)
+
+    robot.process_instruction_line('RFLL')
+
+    assert robot.position.x == 1
+    assert robot.position.y == 0
+    assert robot.orientation == Orientation.N
+    assert robot.lost is False
+
+
+def test_unknown_instruction(grid):
+    robot = Robot(1, 1, Orientation.E.name, grid)
+
+    with pytest.raises(UnknownInstructionException):
+        robot.process_instruction_line('A')
