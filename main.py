@@ -1,10 +1,16 @@
+import sys
+
 from toolz import partition_all
 
 from robot.grid import Grid
 from robot.robot import Robot
 
 if __name__ == "__main__":
-    with open('input.txt') as f:
+    filename = 'input.txt'
+    if len(sys.argv) > 1:
+        filename = sys.argv[1]
+
+    with open(filename) as f:
         lines = f.readlines()
         lines = list(filter(None, map(str.strip, lines)))
 
