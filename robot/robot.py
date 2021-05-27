@@ -10,9 +10,9 @@ Position = namedtuple('Position', ('x', 'y'))
 
 class Orientation(Enum):
     N = 0
-    E = 1
-    S = 2
-    W = 3
+    E = 90
+    S = 180
+    W = 270
 
 
 class Robot:
@@ -24,12 +24,12 @@ class Robot:
         self.lost = False
 
     def rotate_clockwise(self):
-        new_orientation = self.orientation.value + 1
-        self.orientation = Orientation(new_orientation % 4)
+        new_orientation = self.orientation.value + 90
+        self.orientation = Orientation(new_orientation % 360)
 
     def rotate_anticlockwise(self):
-        new_orientation = self.orientation.value - 1
-        self.orientation = Orientation(new_orientation % 4)
+        new_orientation = self.orientation.value - 90
+        self.orientation = Orientation(new_orientation % 360)
 
     def move_forward(self):
         if self.orientation == Orientation.N:
