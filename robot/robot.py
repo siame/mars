@@ -1,9 +1,9 @@
 from collections import namedtuple
 from enum import Enum
 
-from .exceptions import FallOffEdgeException
+from .exceptions import FallOffEdgeException, UnknownInstructionException
 
-__all__ = ['Robot']
+__all__ = ['Robot', 'Orientation']
 
 Position = namedtuple('Position', ('x', 'y'))
 
@@ -55,6 +55,21 @@ class Robot:
 
         self.x = new_position.x
         self.y = new_position.y
+
+    def process_instruction_line(self, instruction_line):
+        for instruction in instruction_line:
+            if instruction == 'F':
+                try:
+                    self.move_forward()
+                except FallOffEdgeException:
+                    break
+
+            elif instruction == 'R':
+                self.rotate_clockwise()
+            elif instruction == 'L':
+                self.rotate_anticlockwise()
+            else:
+                raise UnknownInstructionException()
 
     def __repr__(self):
         if self.lost:
