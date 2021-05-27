@@ -1,7 +1,8 @@
 from collections import namedtuple
 from enum import Enum
 
-from .exceptions import FallOffEdgeException, UnknownInstructionException
+from .exceptions import (FallOffEdgeException, OutOfBoundsException,
+                         UnknownInstructionException)
 
 __all__ = ['Robot', 'Orientation']
 
@@ -17,8 +18,14 @@ class Orientation(Enum):
 
 class Robot:
     def __init__(self, x, y, orientation, grid):
+        if x < 0 or y < 0:
+            raise OutOfBoundsException()
+
         self.position = Position(x, y)
         self.orientation = Orientation.__members__[orientation]
+
+        if self.position.x > grid.x_limit or self.position.y > grid.y_limit:
+            raise OutOfBoundsException()
 
         self.grid = grid
         self.lost = False

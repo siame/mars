@@ -1,5 +1,5 @@
 import pytest
-from robot.exceptions import UnknownInstructionException
+from robot.exceptions import OutOfBoundsException, UnknownInstructionException
 from robot.grid import Grid
 from robot.robot import Orientation, Position, Robot
 
@@ -67,3 +67,14 @@ def test_unknown_instruction(grid):
 
     with pytest.raises(UnknownInstructionException):
         robot.process_instruction_line('A')
+
+
+@pytest.mark.parametrize('initial_position', [
+    (Position(-1, 0)),
+    (Position(0, -1)),
+    (Position(3, 4)),
+    (Position(4, 3)),
+])
+def test_robot_initialised_out_of_grid_bounds(initial_position, grid):
+    with pytest.raises(OutOfBoundsException):
+        Robot(initial_position.x, initial_position.y, Orientation.N.name, grid)

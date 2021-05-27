@@ -7,3 +7,7 @@ class FallOffEdgeException(Exception):
 
 class UnknownInstructionException(Exception):
     pass
+
+
+class OutOfBoundsException(Exception):
+    pass
