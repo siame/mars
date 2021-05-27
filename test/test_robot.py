@@ -47,5 +47,4 @@ def test_move_forward(orientation, final_position, grid):
 
     robot.move_forward()
 
-    assert robot.x == final_position.x
-    assert robot.y == final_position.y
+    assert robot.position == final_position

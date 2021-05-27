@@ -17,8 +17,7 @@ class Orientation(Enum):
 
 class Robot:
     def __init__(self, x, y, orientation, grid):
-        self.x = x
-        self.y = y
+        self.position = Position(x, y)
         self.orientation = Orientation.__members__[orientation]
 
         self.grid = grid
@@ -34,13 +33,13 @@ class Robot:
 
     def move_forward(self):
         if self.orientation == Orientation.N:
-            new_position = Position(self.x, self.y + 1)
+            new_position = Position(self.position.x, self.position.y + 1)
         elif self.orientation == Orientation.E:
-            new_position = Position(self.x + 1, self.y)
+            new_position = Position(self.position.x + 1, self.position.y)
         elif self.orientation == Orientation.S:
-            new_position = Position(self.x, self.y - 1)
+            new_position = Position(self.position.x, self.position.y - 1)
         elif self.orientation == Orientation.W:
-            new_position = Position(self.x - 1, self.y)
+            new_position = Position(self.position.x - 1, self.position.y)
 
         if new_position in self.grid.lost_robots:
             return
@@ -53,8 +52,7 @@ class Robot:
 
             raise FallOffEdgeException()
 
-        self.x = new_position.x
-        self.y = new_position.y
+        self.position = new_position
 
     def process_instruction_line(self, instruction_line):
         for instruction in instruction_line:
