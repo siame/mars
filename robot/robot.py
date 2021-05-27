@@ -71,6 +71,6 @@ class Robot:
 
     def __repr__(self):
         if self.lost:
-            return f'{self.x} {self.y} {self.orientation.name} LOST'
+            return f'{self.position.x} {self.position.y} {self.orientation.name} LOST'  # noqa
         else:
-            return f'{self.x} {self.y} {self.orientation.name}'
+            return f'{self.position.x} {self.position.y} {self.orientation.name}'  # noqa
